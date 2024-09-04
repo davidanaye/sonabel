@@ -1,16 +1,15 @@
-<table id="example" class="table table-striped">
-    <thead>
+<table id="example" class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
-            <th style="font-size: 14px; padding: 4px;">Numéro de marché</th>
-            <th style="font-size: 14px; padding: 4px;">Date de notification</th>
-            <th style="font-size: 14px; padding: 4px;">Attributaire</th>
-            <th style="font-size: 14px; padding: 4px;">Date de signature</th>
-            <th style="font-size: 14px; padding: 4px;">Montant</th>
-            <th style="font-size: 14px; padding: 4px;">Lots associés</th>
-            <th>
-                &nbsp;
+            <th style="font-size: 14px; padding: 8px;">Numéro de marché</th>
+            <th style="font-size: 14px; padding: 8px;">Date de notification</th>
+            <th style="font-size: 14px; padding: 8px;">Attributaire</th>
+            <th style="font-size: 14px; padding: 8px;">Date de signature</th>
+            <th style="font-size: 14px; padding: 8px;">Montant</th>
+            <th style="font-size: 14px; padding: 8px;">Lots associés</th>
+            <th style="text-align: center; width: 100px;">
                 <a class="nav-link" href="{% url 'addmarche' dossier.id %}">
-                    <i class="fa fa-plus-circle text-primary"></i>
+                    <i class="fas fa-plus-circle" style="color: #007bff;"></i>
                 </a>
             </th>
         </tr>
@@ -20,7 +19,7 @@
         <tr>
             <td>{{ item.num_ref }}</td>
             <td>{{ item.date_notif|date:"d/m/Y" }}</td>
-            <td>{{ item.attributaire.nom_four }}</td> <!-- Assurez-vous que 'attributaire' est une instance de 'Fournisseurs' -->
+            <td>{{ item.attributaire.nom_four }}</td>
             <td>{{ item.date_retour_sign|date:"d/m/Y" }}</td>
             <td>{{ item.montant }}</td>
             <td>
@@ -30,13 +29,13 @@
                     Aucun lot sélectionné
                 {% endif %}
             </td>
-            <td>
+            <td style="text-align: center;">
                 <a href="{% url 'modifier_marche' dossier.id item.id %}">
-                    <i class="fa fa-pencil text-warning"></i>
+                    <i class="fas fa-pencil-alt" style="color: #ffc107;"></i>
                 </a>
                 &nbsp;
                 <a href="{% url 'supprimer_marche' dossier.id item.id %}">
-                    <i class="fas fa-trash text-danger"></i>
+                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i>
                 </a>
             </td>
         </tr>

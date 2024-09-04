@@ -1,57 +1,67 @@
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
-<div class="container">
-    <div class="row mb-3">
-        <div class="col text-start">
-            <label for="entries">Afficher :</label>
-            <select id="entries">
-                <option value="10">10</option>
-                <option value="50">50</option>
-                <option value="100">100</option>
-            </select>
-        </div>
-        <div class="col text-end">
-            <form class="d-flex justify-content-end">
-                <input type="search" placeholder="Rechercher...">
-            </form>
-        </div>
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <!-- Meta tags, title, etc. -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    
+    <!-- Bootstrap Icons -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css">
+    
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    
+    <title>Votre Page</title>
+</head>
+<body>
+    <div class="container mt-4">
+        <table id="example" class="table table-striped table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    <th style="font-size: 14px; padding: 8px;">Intitulé Dossier</th>
+                    <th style="font-size: 14px; padding: 8px;">Date de réception de l'offre</th>
+                    <th style="font-size: 14px; padding: 8px;">Entreprise</th>
+                    <th style="font-size: 14px; padding: 8px;">Offre Technique</th>
+                    <th style="font-size: 14px; padding: 8px;">Lots</th>
+                    <th style="text-align: center; width: 100px;">Analyser</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for offre in offres %}
+                <tr>
+                    <td>{{ offre.dossier }}</td>
+                    <td>{{ offre.date_prevu_reception|date:"d/m/Y" }}</td>
+                    <td>{{ offre.entreprise }}</td>
+                    <td class="text-center">
+                        {% if offre.offre_technique %}
+                        <a href="{{ offre.offre_technique.url }}" target="_blank">
+                            <i class="fas fa-file-pdf" style="color: #dc3545;"></i>
+                        </a>
+                        {% else %}
+                        <span class="text-muted">Aucun fichier</span>
+                        {% endif %}
+                    </td>
+                    <td>
+                        {% if offre.lot %}
+                            {{ offre.lot.num_lot }}
+                        {% else %}
+                            Aucun lot sélectionné
+                        {% endif %}
+                    </td>
+                    <td style="text-align: center;">
+                        <a href="{% url 'addresultat' offre.id %}" class="btn btn-primary btn-sm">
+                            <i class="bi bi-clipboard-data"></i>
+                        </a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
     </div>
 
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Intitulé Dossier</th>
-                <th>Date de réception de l'offre</th>
-                <th>Entreprise</th>
-                <th>Offre Technique</th>
-                <th>Lots</th>
-                <th>Analyser</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for offre in offres %}
-            <tr>
-                <td>{{ offre.dossier }}</td>
-                <td>{{ offre.date_prevu_reception }}</td>
-                <td>{{ offre.entreprise }}</td>
-                {% if offre.offre_technique %}
-                <td><a href="{{ offre.offre_technique.url }}"> <i  class="fa fa-file-pdf" style="color: red;"></i> </a></td>
-                {% else %}
-                <td class="text-center text-danger">pas de fichier</td>
-                {% endif %}
-                <td>
-                    {% if offre.lot %}
-                        {{ offre.lot.num_lot }}
-                    {% else %}
-                        Aucun lot sélectionné
-                    {% endif %}
-                </td>
-                <td class="d-flex justify-content-end">
-                    <a href="{% url 'addresultat' offre.id %}" class="btn btn-primary btn-sm">
-                        <i class="bi bi-clipboard-data"></i><!-- Icône pour Analyser -->
-                    </a>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
+    <!-- Bootstrap JS, Popper.js, and jQuery -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.0.7/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

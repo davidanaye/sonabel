@@ -1,18 +1,14 @@
-
-
-
-<table id="example" class="table table-striped">
-    <thead>
+<table id="example" class="table table-striped table-bordered">
+    <thead class="thead-dark">
         <tr>
-            
-            <th style="font-size: 14px; padding: 4px;">Numero de publication</th>
-            <th style="font-size: 14px; padding: 4px;">Date de lancement de publication</th>
-            <th style="font-size: 14px; padding: 4px;">Date de publication DGCMEF</th>
-            <th style="font-size: 14px; padding: 4px;">Fichier</th>
-            <th style="font-size: 14px; padding: 4px;">Dossier</th>
-            <th>
+            <th style="font-size: 14px; padding: 8px;">Numéro de publication</th>
+            <th style="font-size: 14px; padding: 8px;">Date de lancement de publication</th>
+            <th style="font-size: 14px; padding: 8px;">Date de publication DGCMEF</th>
+            <th style="font-size: 14px; padding: 8px;">Fichier</th>
+            <th style="font-size: 14px; padding: 8px;">Dossier</th>
+            <th style="text-align: center; width: 100px;">
                 <a class="nav-link" href="{% url 'addavis' dossier.id %}">
-                <i class="fa fa-plus-circle text-primary"></i>
+                    <i class="fas fa-plus-circle" style="color: #007bff;"></i>
                 </a>
             </th>
         </tr>
@@ -20,40 +16,25 @@
     <tbody>
         {% for item in avis %}
         <tr>
-            <td  >{{item.num_publi}}</td>
-            <td>{{item.date_lancement_pulication}}</td>
-            <td>{{item.date_publi}}</td>
+            <td>{{ item.num_publi }}</td>
+            <td>{{ item.date_lancement_pulication }}</td>
+            <td>{{ item.date_publi }}</td>
             {% if item.fichier %}
-            <td><a href="{{item.fichier.url}}"> <i class="fa fa-file-pdf"></i> </a></td>
+            <td class="text-center"><a href="{{ item.fichier.url }}"><i class="fas fa-file-pdf" style="color: #dc3545;"></i></a></td>
             {% else %}
-            <td class="text-center text-danger">pas de fichier</td>
+            <td class="text-center text-danger">Pas de fichier</td>
             {% endif %}
-            <td>{{item.dossier_id}}</td>
-            <td>
+            <td>{{ item.dossier_id }}</td>
+            <td style="text-align: center;">
                 <a href="{% url 'editavis' item.id %}">
-                    <i class="fa fa-pencil text-warning"></i>
+                    <i class="fas fa-pencil-alt" style="color: #ffc107;"></i>
                 </a>
                 &nbsp;
-                <a title="supprimer" href = "{% url 'deleteavis' item.id %}"  >
-                    <i class="fas fa-trash text-danger"></i> 
+                <a title="Supprimer" href="{% url 'deleteavis' item.id %}">
+                    <i class="fas fa-trash-alt" style="color: #dc3545;"></i>
                 </a>
             </td>
         </tr>
-        
-
         {% endfor %}
     </tbody>
 </table>
-
-
-
-
-
-   
-   
-   
-
-
-
-
-

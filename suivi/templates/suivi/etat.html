@@ -32,27 +32,25 @@
     
     <div class="row" id="dossierContainer">
         {% for dossier_info in dossiers_info %}
-        <div class="col-md-4 dossier-card">
-            <div class="card mb-4">
-                <div class="card-header">
+        <div class="col-lg-4 col-md-6 mb-4 dossier-card">
+            <div class="card h-100">
+                <div class="card-header bg-primary text-white">
                     Dossier: {{ dossier_info.ref_dossier }}
-                    <p>Intitulé: {{ dossier_info.intitule_dossier|default:"None" }}</p>
                 </div>
                 <div class="card-body">
-                   
-                    <p>Référence de publication: {{ dossier_info.ref_pub|default:"None" }}</p>
-                    <p>Date de lancement: {{ dossier_info.date_lancement_pulication|default:"None" }}</p>
-                    <p>Attributaire: {{ dossier_info.nom_attributaire|default:"None" }}</p>
-                    <p>Contagieux litige: {{ dossier_info.contagieux_litige|default:"None" }}</p>
-                    <p>Numéro du marché: {{ dossier_info.numero_marche|default:"None" }}</p>
-                    <p>Date de notification du projet de contrat: {{ dossier_info.date_notif_projet_contrat|default:"None" }}</p>
-                    <p>Date de publication DGCMEF: {{ dossier_info.date_publi|default:"None" }}</p>
-                    <p>Montant: {{ dossier_info.montant|default:"None" }}</p>
-                    <p>Date de signature du contrat: {{ dossier_info.date_sign_contrat|default:"None" }}</p>
-
-                    <p>État: {{ dossier_info.etat }}</p>
+                    <p><strong>Intitulé:</strong> {{ dossier_info.intitule_dossier|default:"None" }}</p>
+                    <p><strong>Référence de publication:</strong> {{ dossier_info.ref_pub|default:"None" }}</p>
+                    <p><strong>Date de lancement:</strong> {{ dossier_info.date_lancement_pulication|default:"None" }}</p>
+                    <p><strong>Attributaire:</strong> {{ dossier_info.nom_attributaire|default:"None" }}</p>
+                    <p><strong>Contagieux litige:</strong> {{ dossier_info.contagieux_litige|default:"None" }}</p>
+                    <p><strong>Numéro du marché:</strong> {{ dossier_info.numero_marche|default:"None" }}</p>
+                    <p><strong>Date de notification:</strong> {{ dossier_info.date_notif_projet_contrat|default:"None" }}</p>
+                    <p><strong>Date de publication DGCMEF:</strong> {{ dossier_info.date_publi|default:"None" }}</p>
+                    <p><strong>Montant:</strong> {{ dossier_info.montant|default:"None" }}</p>
+                    <p><strong>Date de signature:</strong> {{ dossier_info.date_sign_contrat|default:"None" }}</p>
+                    <p><strong>État:</strong> {{ dossier_info.etat }}</p>
                     <div class="progress">
-                        <div class="progress-bar" role="progressbar" style="width: {{ dossier_info.progression }}%;" aria-valuenow="{{ dossier_info.progression }}" aria-valuemin="0" aria-valuemax="100">{{ dossier_info.progression }}%</div>
+                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ dossier_info.progression }}%;" aria-valuenow="{{ dossier_info.progression }}" aria-valuemin="0" aria-valuemax="100">{{ dossier_info.progression }}%</div>
                     </div>
                 </div>
             </div>
@@ -63,7 +61,7 @@
     <div class="row">
         <div class="col-md-12 text-center mb-4">
             <h2>Statut global des dossiers</h2>
-            <canvas id="globalStatusChart" width="200" height="200px"></canvas>
+            <canvas id="globalStatusChart" width="400" height="400"></canvas>
             <p>Progression générale: {{ stats.moyenne_totale }}%</p>
         </div>
     </div>
@@ -93,11 +91,7 @@
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     // Configuration du graphique
-    var canvas = document.getElementById('globalStatusChart');
-    canvas.width = 500; // Ajustez la largeur souhaitée
-    canvas.height = 500; // Ajustez la hauteur souhaitée
-
-    var ctx = canvas.getContext('2d');
+    var ctx = document.getElementById('globalStatusChart').getContext('2d');
     var globalStatusChart = new Chart(ctx, {
         type: 'doughnut',
         data: {
@@ -109,7 +103,7 @@
             }]
         },
         options: {
-            responsive: false, // Désactive la réactivité pour permettre les dimensions fixes
+            responsive: false, // Désactive la réactivité pour conserver les dimensions fixes
             plugins: {
                 legend: {
                     position: 'top',

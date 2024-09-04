@@ -3,6 +3,35 @@
 {% load static %}
 
 {% block extra_style %}
+<style>
+    /* Styles pour harmoniser les onglets avec le thème général */
+    .nav-tabs .nav-link {
+        color: #007bff; /* Couleur principale du thème */
+        font-weight: 500;
+        border: 1px solid #ddd;
+        border-radius: 0.25rem 0.25rem 0 0;
+        transition: background-color 0.3s ease;
+    }
+
+    .nav-tabs .nav-link.active {
+        color: #fff;
+        background-color: #007bff; /* Couleur active des onglets */
+        border-color: #007bff #007bff #ddd; /* Bordure harmonisée */
+    }
+
+    .nav-tabs .nav-link:hover {
+        background-color: #0056b3; /* Légère variation au survol */
+        color: #fff;
+    }
+
+    .tab-content {
+        border: 1px solid #ddd;
+        border-top: none;
+        padding: 15px;
+        border-radius: 0 0 0.25rem 0.25rem;
+        background-color: #f8f9fa; /* Fond pour le contenu des onglets */
+    }
+</style>
 {% endblock extra_style %}
 
 {% block title %}
@@ -21,16 +50,16 @@
                 <a class="nav-link active" id="home-tab" data-bs-toggle="tab" href="#types" role="tab" aria-controls="home" aria-selected="true">Publication</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#emplacement" role="tab" aria-controls="profile" aria-selected="false">Reception et ouverture</a>
+                <a class="nav-link" id="profile-tab" data-bs-toggle="tab" href="#emplacement" role="tab" aria-controls="profile" aria-selected="false">Réception et ouverture</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="valid-tab" data-bs-toggle="tab" href="#valid" role="tab" aria-controls="valid" aria-selected="false">Evaluation</a>
+                <a class="nav-link" id="valid-tab" data-bs-toggle="tab" href="#valid" role="tab" aria-controls="valid" aria-selected="false">Évaluation</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="valid-tab" data-bs-toggle="tab" href="#anul" role="tab" aria-controls="valid" aria-selected="false">Resultat</a>
+                <a class="nav-link" id="anul-tab" data-bs-toggle="tab" href="#anul" role="tab" aria-controls="anul" aria-selected="false">Résultat</a>
               </li>
               <li class="nav-item" role="presentation">
-                <a class="nav-link" id="valid-tab" data-bs-toggle="tab" href="#march" role="tab" aria-controls="valid" aria-selected="false">Marché</a>
+                <a class="nav-link" id="march-tab" data-bs-toggle="tab" href="#march" role="tab" aria-controls="march" aria-selected="false">Marché</a>
               </li>
             </ul>
         
@@ -43,7 +72,6 @@
                     {% include "suivi/offre.html" %}
                 </div>
                 
-
                 <div class="tab-pane fade" id="valid" role="tabpanel" aria-labelledby="valid-tab">
                     {% include "suivi/analyse.html" %}
                 </div>
@@ -51,10 +79,9 @@
                 <div class="tab-pane fade" id="anul" role="tabpanel" aria-labelledby="anul-tab">
                   {% include "suivi/resultat.html" %}
                 </div>  
-                  <div class="tab-pane fade" id="march" role="tabpanel" aria-labelledby="anul-tab">
+                <div class="tab-pane fade" id="march" role="tabpanel" aria-labelledby="march-tab">
                     {% include "suivi/marche.html" %}
-                  </div>
-                
+                </div>
             </div>
         </div>
     </div>
