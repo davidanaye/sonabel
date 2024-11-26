@@ -7,6 +7,13 @@
 {% endblock %}
 
 {% block main %}
+<style>
+    #globalStatusChart {
+        display: block;
+        margin: 0 auto; /* Centre le canvas horizontalement */
+    }
+    
+</style>
 <div class="container-fluid">
 
     <!-- Bouton Voir PPM -->
@@ -40,7 +47,7 @@
                 <div class="card-body">
                     <p><strong>Intitulé:</strong> {{ dossier_info.intitule_dossier|default:"None" }}</p>
                     <p><strong>Référence de publication:</strong> {{ dossier_info.ref_pub|default:"None" }}</p>
-                    <p><strong>Date de lancement:</strong> {{ dossier_info.date_lancement_pulication|default:"None" }}</p>
+                    <p><strong>Date de lancement:</strong> {{ dossier_info.date_lancement_publication|default:"None" }}</p>
                     <p><strong>Attributaire:</strong> {{ dossier_info.nom_attributaire|default:"None" }}</p>
                     <p><strong>Contagieux litige:</strong> {{ dossier_info.contagieux_litige|default:"None" }}</p>
                     <p><strong>Numéro du marché:</strong> {{ dossier_info.numero_marche|default:"None" }}</p>

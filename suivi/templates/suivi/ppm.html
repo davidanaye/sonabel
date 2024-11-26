@@ -12,39 +12,39 @@
 {% endblock btn %}
 
 {% block main %}
-
 <div class="container-fluid mt-4">
+    <button id="exportButton" class="btn btn-success mb-3">Exporter vers Excel</button>
     <div class="table-responsive">
-        <table id="example" class="table table-striped table-bordered">
+        <table id="example1" class="table table-striped table-bordered">
             <thead class="thead-dark">
                 <tr>
-                    <th style="font-size: 14px; padding: 8px;">Num Ordre</th>
-                    <th style="font-size: 14px; padding: 8px;">Année de planification</th>
-                    <th style="font-size: 14px; padding: 8px;">Budget</th>
-                    <th style="font-size: 14px; padding: 8px;">Direction Charge Dossier</th>
-                    <th style="font-size: 14px; padding: 8px;">Unité Service Bénéficiaire</th>
-                    <th style="font-size: 14px; padding: 8px;">Montant Inscription Budgétaire</th>
-                    <th style="font-size: 14px; padding: 8px;">Montant Dépenses Engagées Non Liquidées</th>
-                    <th style="font-size: 14px; padding: 8px;">Disponible</th>
-                    <th style="font-size: 14px; padding: 8px;">Éléments Composantes</th>
-                    <th style="font-size: 14px; padding: 8px;">Type Prestation</th>
-                    <th style="font-size: 14px; padding: 8px;">Nature Prestations</th>
-                    <th style="font-size: 14px; padding: 8px;">Mode Passation</th>
-                    <th style="font-size: 14px; padding: 8px;">Agent Charge Dossier</th>
-                    <th style="font-size: 14px; padding: 8px;">Service Charge Dossier Technique</th>
-                    <th style="font-size: 14px; padding: 8px;">Réf. Dossier Appel Concurrence</th>
-                    <th style="font-size: 14px; padding: 8px;">Intitulé Dossier</th>
-                    <th style="font-size: 14px; padding: 8px;">Date Prévue Lancement DGCMEF</th>
-                    <th style="font-size: 14px; padding: 8px;">Date Réelle Lancement DGCMEF</th>
-                    <th style="font-size: 14px; padding: 8px;">Référence Publication</th>
-                    <th style="font-size: 14px; padding: 8px;">Publication DGCMEF</th>
-                    <th style="font-size: 14px; padding: 8px;">Nom Attributaire Provisoire</th>
-                    <th style="font-size: 14px; padding: 8px;">Contentieux Litiges</th>
-                    <th style="font-size: 14px; padding: 8px;">Montant</th>
-                    <th style="font-size: 14px; padding: 8px;">Numéro Marché</th>
-                    <th style="font-size: 14px; padding: 8px;">Date Notification Projet Contrat</th>
-                    <th style="font-size: 14px; padding: 8px;">Date de signature du Contrat</th>
-                    <th style="font-size: 14px; padding: 8px;">Observation</th>
+                    <th>Num Ordre</th>
+                    <th>Année de planification</th>
+                    <th>Budget</th>
+                    <th>Direction Charge Dossier</th>
+                    <th>Unité Service Bénéficiaire</th>
+                    <th>Montant Inscription Budgétaire</th>
+                    <th>Montant Dépenses Engagées Non Liquidées</th>
+                    <th>Disponible</th>
+                    <th>Éléments Composantes</th>
+                    <th>Type Prestation</th>
+                    <th>Nature Prestations</th>
+                    <th>Mode Passation</th>
+                    <th>Agent Charge Dossier</th>
+                    <th>Service Charge Dossier Technique</th>
+                    <th>Réf. Dossier Appel Concurrence</th>
+                    <th>Intitulé Dossier</th>
+                    <th>Date Prévue Lancement DGCMEF</th>
+                    <th>Date Réelle Lancement DGCMEF</th>
+                    <th>Référence Publication</th>
+                    <th>Publication DGCMEF</th>
+                    <th>Nom Attributaire Provisoire</th>
+                    <th>Contentieux Litiges</th>
+                    <th>Montant</th>
+                    <th>Numéro Marché</th>
+                    <th>Date Notification Projet Contrat</th>
+                    <th>Date de signature du Contrat</th>
+                    <th>Observation</th>
                 </tr>
             </thead>
             <tbody>
@@ -54,7 +54,7 @@
                     <td>{{ data.item.annee }}</td>
                     <td>{{ data.item.budget }}</td>
                     <td>{{ data.item.direction_charge_dossier }}</td>
-                    <td>{{ data.item.direction_charge_dossier }}</td>
+                    <td>{{ data.item.unite_service_beneficiaire }}</td>
                     <td>{{ data.item.montant_inscription_budgetaire }}</td>
                     <td>{{ data.item.montant_depenses_engagees_non_liquidees }}</td>
                     <td>{{ data.item.disponible }}</td>
@@ -69,9 +69,9 @@
                     <td>{{ data.dossier_info.date_publi|default:'N/A' }}</td>
                     <td>{{ data.dossier_info.date_lancement_publication|default:'N/A' }}</td>
                     <td>{{ data.dossier_info.ref_pub|default:'N/A' }}</td>
-                    <td>{{ data.dossier_info.ref_pub|default:'N/A' }}</td>
+                    <td>{{ data.dossier_info.publication_dgcmef|default:'N/A' }}</td>
                     <td>{{ data.dossier_info.nom_attributaire|default:'N/A' }}</td>
-                    <td>{{ data.dossier_info.contagieux_litige|default:'N/A' }}</td>
+                    <td>{{ data.dossier_info.contentieux_litiges|default:'N/A' }}</td>
                     <td>{{ data.dossier_info.montant|default:'N/A' }}</td>
                     <td>{{ data.dossier_info.numero_marche|default:'N/A' }}</td>
                     <td>{{ data.dossier_info.date_notif_projet_contrat|default:'N/A' }}</td>
@@ -84,4 +84,96 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Vérifiez si la table a déjà été initialisée
+        var existingTable = $.fn.dataTable.isDataTable('#example1');
+        var table;
+    
+        if (!existingTable) {
+            table = $('#example1').DataTable({
+                ordering: false,
+                paging: true,
+                stateSave: true,
+                language: {
+                    "sProcessing":     "Traitement en cours...",
+                    "sSearch":         "Rechercher&nbsp;:",
+                    "sLengthMenu":     "Afficher _MENU_ &eacute;l&eacute;ments",
+                    "sInfo":           "Affichage de l'&eacute;l&eacute;ment _START_ &agrave; _END_ sur _TOTAL_ &eacute;l&eacute;ments",
+                    "sInfoEmpty":      "Affichage de l'&eacute;l&eacute;ment 0 &agrave; 0 sur 0 &eacute;l&eacute;ment",
+                    "sInfoFiltered":   "(filtr&eacute; de _MAX_ &eacute;l&eacute;ments au total)",
+                    "sInfoPostFix":    "",
+                    "sLoadingRecords": "Chargement en cours...",
+                    "sZeroRecords":    "Aucun &eacute;l&eacute;ment &agrave; afficher",
+                    "sEmptyTable":     "Aucune donn&eacute;e disponible dans le tableau",
+                    "oPaginate": {
+                        "sFirst":      "Premier",
+                        "sPrevious":   "Pr&eacute;c&eacute;dent",
+                        "sNext":       "Suivant",
+                        "sLast":       "Dernier"
+                    },
+                    "oAria": {
+                        "sSortAscending":  ": activer pour trier la colonne par ordre croissant",
+                        "sSortDescending": ": activer pour trier la colonne par ordre d&eacute;croissant"
+                    },
+                    "select": {
+                        "rows": {
+                            _: "%d lignes sélectionnées",
+                            0: "Aucune ligne sélectionnée",
+                            1: "1 ligne sélectionnée"
+                        }
+                    }
+                }
+            });
+        } else {
+            table = $('#example1').DataTable();
+        }
+    
+        document.getElementById('exportButton').addEventListener('click', function() {
+            try {
+                if (typeof XLSX === 'undefined') {
+                    throw new Error("La bibliothèque SheetJS (XLSX) n'est pas chargée.");
+                }
+    
+                // Récupérer toutes les données de DataTables
+                var allData = table.rows().data().toArray();
+    
+                // Récupérer les en-têtes du tableau
+                var headers = [];
+                table.columns().every(function() {
+                    headers.push(this.header().textContent.trim());
+                });
+    
+                // Préparer les données pour l'exportation
+                var dataForExport = [headers].concat(allData);
+    
+                var wb = XLSX.utils.book_new();
+                var ws = XLSX.utils.aoa_to_sheet(dataForExport);
+                XLSX.utils.book_append_sheet(wb, ws, 'Toutes les données');
+                
+                if (typeof saveAs !== 'undefined') {
+                    var wbout = XLSX.write(wb, {bookType:'xlsx', type:'binary'});
+                    saveAs(new Blob([s2ab(wbout)], {type:"application/octet-stream"}), 'PPM.xlsx');
+                } else {
+                    XLSX.writeFile(wb, 'toutes_les_donnees.xlsx');
+                }
+    
+                console.log("Exportation de toutes les données réussie");
+            } catch (error) {
+                console.error("Erreur lors de l'exportation :", error);
+                alert("Une erreur s'est produite lors de l'exportation. Veuillez vérifier la console pour plus de détails.");
+            }
+        });
+    
+        function s2ab(s) {
+            var buf = new ArrayBuffer(s.length);
+            var view = new Uint8Array(buf);
+            for (var i=0; i<s.length; i++) view[i] = s.charCodeAt(i) & 0xFF;
+            return buf;
+        }
+    });
+    </script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
 {% endblock main %}

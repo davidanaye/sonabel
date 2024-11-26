@@ -1,77 +1,121 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
 {% load i18n %}
 {% load static %}
 
 {% block title %}
-    ajout dossier
+    Ajout Dossier
 {% endblock %}
 
-
-
-
 {% block main %}
+<style>
+   /* From Uiverse.io by tranquoclong */
+   .inputGroup {
+     font-family: 'Segoe UI', sans-serif;
+     margin: 1em 0 1em 0;
+     position: relative;
+     width: 100%;
+     max-width: 800px;
+   }
+   
+   .inputGroup input, .inputGroup textarea, .inputGroup select {
+     font-size: 100%;
+     padding: 1.5em 1em 0.5em 1em;
+     outline: none;
+     border: 2px solid rgb(200, 200, 200);
+     background-color: transparent;
+     border-radius: 20px;
+     width: 100%;
+     box-sizing: border-box;
+     position: relative;
+     z-index: 1;
+     margin-bottom: 20px;
+   }
+   
+   .inputGroup label {
+     font-size: 90%;
+     position: absolute;
+     left: 15px;
+     top: -0.5em;
+     padding: 0 10px;
+     background-color: white;
+     color: rgb(100, 100, 100);
+     pointer-events: none;
+     transition: all 0.3s ease;
+     z-index: 2; /* Ensures it appears above the input */
+     
+   }
+   
+   .inputGroup input:focus~label,
+   .inputGroup input:not(:placeholder-shown)~label {
+     top: -1.4em; /* Moves label above the input */
+     color: rgb(150, 150, 200);
+     font-size: 85%;
+   }
+   
+   .inputGroup input:focus {
+     border-color: rgb(150, 150, 200);
+   }
+   
+   input::placeholder {
+     color: transparent; /* Hides placeholder text when input is focused */
+   }
+   .heading {
+      font-size: 2.5em;
+      color: #2e2e2e;
+      font-weight: 700;
+      margin: 15px 0 30px 0;
+    }
+    
+   </style>
+   
 
-
-<div class="container-fluid">
+   <div class="container-fluid">
       <form method="post" class="card p-3 mt-5 border border-primary" enctype="multipart/form-data">
-         <h1>Oui cest celle ci</h1>
-   
-            {% csrf_token %}
-         
-            {{ form|crispy }}
-
-            <div class="mt-4" style="width: 100p%;">
-               
-               <button type="submit" name="submit" value="Ajouter" class="btn btn-primary" id="submit-id-submit" />
-                Ajouter   <i class="fas fa-plus"></i>
-            </button>
-
-               <a style= "font-size: 15px; wdith: 50px;" href="{% url 'dossier' %}" type="button" class="btn btn-warning" title="Close">
-                     <i class="fas fa-times"></i>
-               </a>
-            
-            </div>
-         </form> 
-</div>
-
-   {% endblock main %}
-
-
-
-   
-   <script>
-     $("#id_region").select2({
-      placeholder: "selectionner la region",
-      allowClear: true
-     });
-     $("#id_province").select2({
-      placeholder: "selectionner la province",
-      allowClear: true
-     });
-   
-   
-     $("#id_commune").select2({
-       placeholder: "selectionner la Commune",
-       allowClear: true
-      });
-   
-   
-      $("#id_region_demandeur").select2({
-         placeholder: "selectionner la region du demandeur",
-         allowClear: true
-        });
-   
-   
-        $("#id_province_demandeur").select2({
-         placeholder: "selectionner la province du demandeur",
-         allowClear: true
-        });
-        
-   </script>
-
-
-
-
-
+          <h1 class="heading">Ajouter un Dossier</h1>
+          {% csrf_token %}
+          
+          <div class="row">
+              <div class="col-md-6">
+                  <div class="inputGroup">
+                      <input type="text" id="numero_doss" name="numero_doss" placeholder=" " required>
+                      <label for="numero_doss">Numéro de dossier</label>
+                  </div>
+                  <div class="inputGroup">
+                      <input type="text" id="intitule_doss" name="intitule_doss" placeholder=" " required>
+                      <label for="intitule_doss">Intitulé du dossier</label>
+                  </div>
+                  <div class="inputGroup">
+                      <input type="date" id="date_trans_sign" name="date_trans_sign" placeholder=" " required>
+                      <label for="date_trans_sign">Date envoi pour signature</label>
+                  </div>
+              </div>
+  
+              <div class="col-md-6">
+                  <div class="inputGroup">
+                      <input type="date" id="date_retour_sign" name="date_retour_sign" placeholder=" " required>
+                      <label for="date_retour_sign">Date retour signature</label>
+                  </div>
+                  <div class="inputGroup">
+                      <input type="date" id="date_trans_dgcmef" name="date_trans_dgcmef" placeholder=" " required>
+                      <label for="date_trans_dgcmef">Date transmission DGCMEF</label>
+                  </div>
+                  <div class="inputGroup">
+                      <input type="date" id="date_retour_dgcmef" name="date_retour_dgcmef" placeholder=" " required>
+                      <label for="date_retour_dgcmef">Date retour DGCMEF</label>
+                  </div>
+              </div>
+          </div>
+  
+          <div class="text-center mt-4">
+              <button type="submit" class="btn btn-primary">
+                  Ajouter <i class="fas fa-plus"></i>
+              </button>
+              <a href="{% url 'dossier' %}" class="btn btn-warning ml-2" title="Annuler">
+                  Annuler <i class="fas fa-times"></i>
+              </a>
+          </div>
+      </form>
+  </div>
+  
+{% endblock %}

@@ -560,7 +560,7 @@ def addmarche(request, dossier_id):
         form = MarcheForm()
         form.fields['offre'].queryset = offres
 
-    return render(request, 'suivi/editMarche.html', {'form': form, 'dossier': dossier})
+    return render(request, 'suivi/editmarche.html', {'form': form, 'dossier': dossier})
 
 
 

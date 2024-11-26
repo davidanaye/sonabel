@@ -1,3 +1,4 @@
+from django.utils import timezone
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -130,13 +131,13 @@ class Planitems(models.Model):
 
 class Dossiers(models.Model):
     planitem_id = models.ForeignKey('Planitems', blank=True, null=True, on_delete=models.CASCADE, verbose_name="Ligne du plan")
-    numero_doss = models.CharField(max_length=200, blank=True, null=True)
-    intitule_doss = models.TextField(blank=True, null=True)
-    date_trans_sign = models.DateField(blank=True, null=True, verbose_name="Date envois pour signature")
-    date_retour_sign = models.DateField(blank=True, null=True, verbose_name="Date retour")
-    date_trans_dgcmef = models.DateField(blank=True, null=True, verbose_name="Date de transmission à la DGCMEF")
-    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=True, null=True, verbose_name="Propriétaire")
-    date_retour_dgcmef = models.DateField(blank=True, null=True, verbose_name="Date retour la DGCMEF")
+    numero_doss = models.CharField(max_length=200, blank=False, null=False)
+    intitule_doss = models.TextField(blank=False, null=False)
+    date_trans_sign = models.DateField(blank=False, null=False, verbose_name="Date envois pour signature")
+    date_retour_sign = models.DateField(blank=False, null=False, verbose_name="Date retour")
+    date_trans_dgcmef = models.DateField(blank=False, null=False, verbose_name="Date de transmission à la DGCMEF")
+    owner = models.ForeignKey(User, on_delete=models.CASCADE, blank=False, null=False, verbose_name="Propriétaire")
+    date_retour_dgcmef = models.DateField( blank=False, null=False, verbose_name="Date retour la DGCMEF")
     fichier = models.FileField(blank=True, null=True, upload_to="uploads/dao")
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
@@ -166,12 +167,12 @@ class Lots(models.Model):
 
     
 class Avis(models.Model):
-    num_publi = models.CharField(max_length=200, blank=True, null=True, verbose_name="Numero de publication")
+    num_publi = models.CharField(max_length=200, blank=False, null=False, verbose_name="Numero de publication")
     date_envoi = models.DateField(blank=True, null=True, verbose_name="Date d'envois")
-    date_publi = models.DateTimeField(blank=True, null=True, verbose_name="Date de publication DGCMEF")
+    date_publi = models.DateTimeField(blank=False, null=False, verbose_name="Date de publication DGCMEF")
     fichier = models.FileField(upload_to="uploads/avis", blank=True, null=True, verbose_name="Avis de publication")
     dossier_id = models.ForeignKey(Dossiers, blank=True, null=True, verbose_name="Dossier", on_delete=models.CASCADE)
-    date_lancement_pulication = models.DateField(blank=True, null=True, verbose_name="Date de lancement de publication")
+    date_lancement_pulication = models.DateField(blank=False, null=False, verbose_name="Date de lancement de publication")
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     
@@ -180,9 +181,9 @@ class Offres(models.Model):
     lot = models.ForeignKey(Lots, on_delete=models.SET_NULL, verbose_name="Lot", null=True, blank=True)
     updated_at = models.DateTimeField(blank=True, null=True)
     off_doss_id = models.IntegerField(blank=True, null=True)  
-    date_prevu_reception = models.DateField(blank=True, null=True, verbose_name="Date prévue de réception des offres")
+    date_prevu_reception = models.DateField(blank=False, null=False, verbose_name="Date prévue de réception des offres")
     date_reel_reception = models.DateField(blank=True, null=True, verbose_name="Date réelle de réception des offres")
-    entreprise = models.ForeignKey(Fournisseurs, on_delete=models.SET_NULL, null=True, blank=True, related_name='offres')
+    entreprise = models.ForeignKey(Fournisseurs, on_delete=models.SET_NULL, blank=True, null=True, related_name='offres')
     offre_technique = models.FileField(upload_to='uploads/offres_techniques/', blank=True, null=True, verbose_name="Offre technique")
 
     def __str__(self):
@@ -201,17 +202,17 @@ class Resultats(models.Model):
         blank=True,
         related_name='resultats'
      )
-    litige = models.CharField(max_length=3, choices=[('Oui', 'Oui'), ('Non', 'Non')],blank=True, null=True)
+    litige = models.CharField(max_length=3, choices=[('Oui', 'Oui'), ('Non', 'Non')],blank=False, null=False,)
     fichierpub = models.CharField(max_length=255, blank=True, null=True)
     fichier_litige = models.FileField(upload_to='litiges/', blank=True, null=True)
     created_at = models.DateTimeField(blank=True, null=True)
     updated_at = models.DateTimeField(blank=True, null=True)
-    date_prevu_pub = models.DateField(blank=True, null=True)
+    date_prevu_pub = models.DateField(blank=False, null=False)
     date_reelle_pub = models.DateField(blank=True, null=True)
     observation = models.TextField(blank=True, null=True)
-    statut = models.CharField(max_length=10, choices=[('Retenu', 'Retenu'), ('Non Retenu', 'Non Retenu')], blank=True, null=True)
+    statut = models.CharField(max_length=10, choices=[('Retenu', 'Retenu'), ('Non Retenu', 'Non Retenu')], blank=False, null=False)
     offre = models.OneToOneField('Offres', on_delete=models.CASCADE, related_name='resultat')
-    lot = models.ForeignKey('Lots', on_delete=models.CASCADE, related_name='resultats', null=True, blank=True)
+    lot = models.ForeignKey('Lots', on_delete=models.CASCADE, related_name='resultats', blank=False, null=False)
 
     def __str__(self):
         return f"Résultat pour Offre {self.offre} - Lot {self.lot}"
@@ -222,9 +223,9 @@ class Marches(models.Model):
     offre = models.ForeignKey(Offres, blank=True, null=True, verbose_name="Offre", on_delete=models.CASCADE)
     dossier = models.ForeignKey(Dossiers, blank=True, null=True, verbose_name="Dossier", on_delete=models.CASCADE)
     resultat = models.ForeignKey(Resultats, blank=True, null=True, verbose_name="Résultat", on_delete=models.CASCADE)
-    num_ref = models.CharField(max_length=100, blank=True, null=True)
-    date_notif = models.DateField(blank=True, null=True)  # Changez en DateField
-    montant = models.DecimalField(max_digits=10, decimal_places=2, blank=True, null=True)  # Changez en DecimalField
+    num_ref = models.CharField(max_length=100, blank=False, null=False)
+    date_notif = models.DateField(blank=False, null=False,)  # Changez en DateField
+    montant = models.DecimalField(max_digits=10, decimal_places=2, blank=False, null=False)  # Changez en DecimalField
     attributaire = models.ForeignKey(
         'Fournisseurs',
         on_delete=models.SET_NULL,
@@ -232,7 +233,7 @@ class Marches(models.Model):
         blank=True,
         related_name='marches'
     )
-    date_retour_sign = models.DateField(blank=True, null=True)  # Changez en DateField
+    date_retour_sign = models.DateField(blank=False, null=False)  # Changez en DateField
     created_at = models.DateTimeField(auto_now_add=True, blank=True, null=True)
     updated_at = models.DateTimeField(auto_now=True, blank=True, null=True)
 

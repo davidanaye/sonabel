@@ -18,19 +18,59 @@ class PlansForm(forms.ModelForm):
         
         
         
+from django import forms
+from .models import Dossiers
+
+
 class DossierForm(forms.ModelForm):
     class Meta:
         model = Dossiers
         fields = '__all__'
         exclude = ('planitem_id', 'owner')
-        widgets = {
-            'date_trans_dgcmef': forms.DateInput(attrs={'type': 'date'}),
-            'date_retour_dgcmef': forms.DateInput(attrs={'type': 'date'}),
-            'date_trans_sign': forms.DateInput(attrs={'type': 'date'}),
-            'date_retour_sign': forms.DateInput(attrs={'type': 'date'}),
-            'intitule_doss': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
-        }
         
+        widgets = {
+            'numero_doss': forms.TextInput(attrs={
+                'class': 'inputGroup', 
+                'autocomplete': 'off', 
+                'required': 'true',
+                'placeholder': 'Numéro de dossier'
+            }),
+            'intitule_doss': forms.TextInput(attrs={
+                'class': 'inputGroup',
+                'autocomplete': 'off',
+                'required': 'true',
+                'placeholder': 'Intitulé du dossier'
+            }),
+            'date_trans_sign': forms.DateInput(attrs={
+                'class': 'inputGroup',
+                'type': 'date',
+                'required': 'true',
+                'placeholder': 'Date envoi pour signature'
+            }),
+            'date_retour_sign': forms.DateInput(attrs={
+                'class': 'inputGroup',
+                'type': 'date',
+                'required': 'true',
+                'placeholder': 'Date retour signature'
+            }),
+            'date_trans_dgcmef': forms.DateInput(attrs={
+                'class': 'inputGroup',
+                'type': 'date',
+                'required': 'true',
+                'placeholder': 'Date transmission DGCMEF'
+            }),
+            'date_retour_dgcmef': forms.DateInput(attrs={
+                'class': 'inputGroup',
+                'type': 'date',
+                'required': 'true',
+                'placeholder': 'Date retour DGCMEF'
+            }),
+            'fichier': forms.FileInput(attrs={
+                'class': 'inputGroup',
+                'required': 'true',
+            }),
+        }
+
         
         
         
@@ -38,7 +78,7 @@ class LotForm(forms.ModelForm):
     class Meta:
         model = Lots
         fields = '__all__'
-        exclude = ('dossier_id',)
+        exclude = ('dossier_id','marche')
         widgets = {
             'intitule_lot': forms.Textarea(attrs={'rows': 4, 'cols': 40}),
         }
@@ -50,8 +90,25 @@ class AvisForm(forms.ModelForm):
         model = Avis
         exclude = ('dossier_id', 'date_envoi',)
         widgets = {
-            'date_publi': forms.DateInput(attrs={'type': 'date'}),
-            'date_lancement_pulication': forms.DateInput(attrs={'type': 'date'}),
+            'num_publi': forms.TextInput(attrs={
+                'class': 'inputGroup',
+                'autocomplete': 'off',
+                'placeholder': 'Numéro de publication'
+            }),
+            'date_lancement_pulication': forms.DateInput(attrs={
+                'class': 'inputGroup',
+                'type': 'date',
+                'placeholder': 'Date de lancement de la publication'
+            }),
+            'date_publi': forms.DateInput(attrs={
+                'class': 'inputGroup',
+                'type': 'date',
+                'placeholder': 'Date de publication DGCMEF'
+            }),
+            'fichier': forms.FileInput(attrs={
+                'class': 'inputGroup',
+                'placeholder': 'Avis de publication'
+            }),
         }
         labels = {
             'date_lancement_pulication': 'Date de lancement de la publication',
@@ -59,7 +116,7 @@ class AvisForm(forms.ModelForm):
             'num_publi': 'Numéro de publication',
             'fichier': 'Avis de publication',
         }
-        
+
 class OffreForm(forms.ModelForm):
     entreprise = forms.ModelChoiceField(
         queryset=Fournisseurs.objects.all(),
@@ -80,6 +137,12 @@ class OffreForm(forms.ModelForm):
     class Meta:
         model = Offres
         fields = ['date_prevu_reception', 'entreprise', 'offre_technique', 'lot']
+        labels = {
+            'date_prevu_reception': 'Date prévue de réception des offres'
+        }
+        widgets = {
+            'date_prevu_reception': forms.DateInput(attrs={'type': 'date', 'class': 'form-control'}),
+        }
 
     def __init__(self, *args, **kwargs):
         dossier = kwargs.pop('dossier', None)
@@ -102,6 +165,7 @@ class OffreForm(forms.ModelForm):
                 return entreprise
             else:
                 raise forms.ValidationError("Veuillez sélectionner ou ajouter une entreprise.")
+            
 class MarcheForm(forms.ModelForm):
     class Meta:
         model = Marches
@@ -153,3 +217,4 @@ class ResultatsForm(forms.ModelForm):
         super(ResultatsForm, self).__init__(*args, **kwargs)
         self.fields['attributaire'].queryset = Fournisseurs.objects.all()
         self.fields['attributaire'].label_from_instance = lambda obj: obj.nom_four
+        
